@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on:
+  push:
+    paths-ignore:
+      - '*.md'
+      - '.github/**'
+      - '*.yaml'
+      - '*.yml'
+      - '*.png'
+      - 'LICENSE'
+
+jobs:
+
+  build_arm64_images:
+    name: "Build Multi Arch Images"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          version: latest
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_GIT_SEC }}
+
+      - name: Run Buildx & Push Multi Arch
+        run: |
+          docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t ghcr.io/androidseb25/ipv64ipscanner:latest -f ./Dockerfile --provenance=false --sbom=false --output type=image,push=true .

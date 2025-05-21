@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  ipscanner:
+    image: ghcr.io/androidseb25/ipv64ipscanner:latest
+    pull_policy: always
+    ports:
+      - 52677:8080
+    environment:
+      DB_IP:    'db'                          # Database URL/IP for connection default "db" - don't change when no local db exists
+      DB_NAME:  'IPv64IpScanner'              # Database name default "IPv64IpScanner"
+      DB_USER:  'IPv64IpScanner'              # Database user default "IPv64IpScanner"
+      DB_PW:    'yc6NYCRlOAQZAXiWsaDG2jHBlk'  # Database password default please change
+      DB_PORT:  '3306'                        # Database port default 3306
+      IP_TASK_COUNT: '10'                     # the count how many ip checkewd in one job
+      IP_TASK_INTERVAL: '5'                   # the interval when a job is triggered in minutes
+    restart: always
+    volumes:
+      - ipscanner-data:/app/data
+    depends_on:
+      - db
+
+  db:
+    image: 'jc21/mariadb-aria:latest-innodb'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD:   'z0x6I1pQcyURkWd3ll3lZte2dR'
+      MYSQL_DATABASE:        'IPv64IpScanner'
+      MYSQL_USER:            'IPv64IpScanner'
+      MYSQL_PASSWORD:        'yc6NYCRlOAQZAXiWsaDG2jHBlk' # Database password default please change
+      TZ:                    'Europe/Berlin'
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  ipscanner-data:
+  db-data:
