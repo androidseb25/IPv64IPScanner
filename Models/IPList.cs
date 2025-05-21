@@ -22,7 +22,7 @@ public class IPList : DBBase
             filter = "where ip.IP_Queue = 1";
 
         IPList ipList = new IPList();
-        dynamic data = await ipList.SelectFromSql($"select * from IPList ip {filter}");
+        dynamic data = await ipList.SelectFromSql($"select * from IPList ip {filter} ORDER BY INET6_ATON(ip.IP_Address)");
         var jsonData = JsonConvert.SerializeObject(data);
         List<IPList> ipLists = JsonConvert.DeserializeObject<List<IPList>>(jsonData);
         return ipLists;
