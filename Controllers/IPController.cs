@@ -17,7 +17,7 @@ public class IPController : ControllerBase
     public async Task<IActionResult> PostIpList([FromBody] List<PostObject> postObjects)
     {
         if (postObjects == null || postObjects.Count == 0)
-            return BadRequest(new Response {Message = "Objekt darf nicht leer sein!", Status = 202});
+            return BadRequest(new Response { Message = "Objekt darf nicht leer sein!", Status = 202 });
 
         foreach (var postObject in postObjects)
         {
@@ -29,7 +29,7 @@ public class IPController : ControllerBase
             ipList.IP_Queue = true;
             await ipList.Insert();
         }
-        
+
         return Ok(new Response { Message = "IP Adressen gespeichert!", Status = 200 });
     }
 }

@@ -6,7 +6,9 @@ namespace IPv64IPScanner;
 
 public class DatabaseCreator
 {
-    public DatabaseCreator() { }
+    public DatabaseCreator()
+    {
+    }
 
     private string _Connstring = "";
 
@@ -21,6 +23,7 @@ public class DatabaseCreator
             Console.WriteLine($"Failed!", "Please check you're database connection data and restart again");
             return;
         }
+
         Console.WriteLine($"Success!");
         Console.WriteLine($"Database exists...   ");
         bool isDataBaseExists = await CheckIfDatabaseExists();
@@ -34,6 +37,7 @@ public class DatabaseCreator
                 Console.WriteLine($"Failed!", "");
                 return;
             }
+
             Console.WriteLine($"Success!");
         }
         else
@@ -56,7 +60,8 @@ public class DatabaseCreator
         }
 
         if (!withDBName)
-            _Connstring = $"server={Env.DB_IP};port={Env.DB_PORT};user={Env.DB_USER};password={Env.DB_PW};CHARSET=utf8mb4;";
+            _Connstring =
+                $"server={Env.DB_IP};port={Env.DB_PORT};user={Env.DB_USER};password={Env.DB_PW};CHARSET=utf8mb4;";
         else
             _Connstring =
                 $"server={Env.DB_IP};port={Env.DB_PORT};database={Env.DB_NAME};user={Env.DB_USER};password={Env.DB_PW};CHARSET=utf8mb4;";
@@ -80,7 +85,8 @@ public class DatabaseCreator
         }
         catch (Exception exception)
         {
-            Console.WriteLine("", $"Error: can't connect to database!\n\n{exception.Message}\n\n{exception.StackTrace}");
+            Console.WriteLine("",
+                $"Error: can't connect to database!\n\n{exception.Message}\n\n{exception.StackTrace}");
             Console.ResetColor();
             // currentProcess.Kill(true);
             return false;
@@ -108,7 +114,8 @@ public class DatabaseCreator
         }
         catch (Exception exception)
         {
-            Console.WriteLine("", $"Error: can't connect to database!\n\n{exception.Message}\n\n{exception.StackTrace}");
+            Console.WriteLine("",
+                $"Error: can't connect to database!\n\n{exception.Message}\n\n{exception.StackTrace}");
             Console.ResetColor();
             return false;
         }
@@ -131,7 +138,7 @@ public class DatabaseCreator
     private async Task CreateDB()
     {
         string DB_NAME = Env.DB_NAME;
-        
+
         try
         {
             using (var mySqlConnection = new MySqlConnection())
@@ -143,7 +150,8 @@ public class DatabaseCreator
         }
         catch (Exception exception)
         {
-            Console.WriteLine("", $"Error: can't connect to database!\n\n{exception.Message}\n\n{exception.StackTrace}");
+            Console.WriteLine("",
+                $"Error: can't connect to database!\n\n{exception.Message}\n\n{exception.StackTrace}");
             Console.ResetColor();
         }
     }
@@ -151,6 +159,7 @@ public class DatabaseCreator
     #endregion
 
     #region CreateTables
+
     private async Task CreateAllTables()
     {
         try
@@ -164,10 +173,12 @@ public class DatabaseCreator
         }
         catch (Exception exception)
         {
-            Console.WriteLine("", $"Error: can't connect to database!\n\n{exception.Message}\n\n{exception.StackTrace}");
+            Console.WriteLine("",
+                $"Error: can't connect to database!\n\n{exception.Message}\n\n{exception.StackTrace}");
             Console.ResetColor();
         }
     }
+
     private async Task CreateTable(MySqlConnection mySqlConnection, string table)
     {
         Console.WriteLine($"Exist {table}...   ");
@@ -186,12 +197,14 @@ public class DatabaseCreator
 
         Console.ResetColor();
     }
+
     private async Task<bool> CheckIfTableExists(MySqlConnection connection, string table)
     {
         dynamic? items = null;
         items = await connection.QueryAsync($"SHOW TABLES LIKE '{table}'");
         return items.Count > 0;
     }
+
     private async Task<bool> CreateTableCustom(MySqlConnection connection, string table)
     {
         string sql = "";
@@ -201,7 +214,8 @@ public class DatabaseCreator
         switch (table)
         {
             case "IPList":
-                sql = $@"CREATE TABLE IF NOT EXISTS IPList (IP_ID int NOT NULL AUTO_INCREMENT, IP_Address text NOT NULL, IP_Blocked int(1) NOT NULL, IP_Queue int(1) NOT NULL, IP_ExtendedInfos text NOT NULL, IP_Added timestamp default current_timestamp() NOT NULL, IP_Changed timestamp default current_timestamp() NOT NULL, PRIMARY KEY (IP_ID), index(IP_ID));";
+                sql =
+                    $@"CREATE TABLE IF NOT EXISTS IPList (IP_ID int NOT NULL AUTO_INCREMENT, IP_Address text NOT NULL, IP_Blocked int(1) NOT NULL, IP_Queue int(1) NOT NULL, IP_ExtendedInfos text NOT NULL, IP_Added timestamp default current_timestamp() NOT NULL, IP_Changed timestamp default current_timestamp() NOT NULL, PRIMARY KEY (IP_ID), index(IP_ID));";
                 break;
         }
 
@@ -217,5 +231,6 @@ public class DatabaseCreator
             return false;
         }
     }
+
     #endregion
 }

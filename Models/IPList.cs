@@ -20,7 +20,7 @@ public class IPList : DBBase
             filter = "where ip.IP_Blocked = 1";
         else if (onlyQueue)
             filter = "where ip.IP_Queue = 1";
-        
+
         IPList ipList = new IPList();
         dynamic data = await ipList.SelectFromSql($"select * from IPList ip {filter}");
         var jsonData = JsonConvert.SerializeObject(data);

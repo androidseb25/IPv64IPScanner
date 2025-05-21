@@ -1,6 +1,5 @@
 namespace IPv64IPScanner;
 
-// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 public class Features
 {
 }

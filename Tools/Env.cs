@@ -4,36 +4,24 @@ public static class Env
 {
     public static string DB_IP
     {
-        get
-        {
-            return Environment.GetEnvironmentVariable("DB_IP") ?? "";
-        }
+        get { return Environment.GetEnvironmentVariable("DB_IP") ?? ""; }
     }
-    
+
     public static string DB_NAME
     {
-        get
-        {
-            return Environment.GetEnvironmentVariable("DB_NAME") ?? "IPv64IpScanner";
-        }
+        get { return Environment.GetEnvironmentVariable("DB_NAME") ?? "IPv64IpScanner"; }
     }
-    
+
     public static string DB_USER
     {
-        get
-        {
-            return Environment.GetEnvironmentVariable("DB_USER") ?? "IPv64IpScanner";
-        }
+        get { return Environment.GetEnvironmentVariable("DB_USER") ?? "IPv64IpScanner"; }
     }
-    
+
     public static string DB_PW
     {
-        get
-        {
-            return Environment.GetEnvironmentVariable("DB_PW") ?? "";
-        }
+        get { return Environment.GetEnvironmentVariable("DB_PW") ?? ""; }
     }
-    
+
     public static int DB_PORT
     {
         get
@@ -42,7 +30,7 @@ public static class Env
             return int.Parse(port);
         }
     }
-    
+
     public static int IP_TASK_COUNT
     {
         get
@@ -51,7 +39,7 @@ public static class Env
             return int.Parse(count);
         }
     }
-    
+
     public static int IP_TASK_INTERVAL
     {
         get

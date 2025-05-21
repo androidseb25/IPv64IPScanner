@@ -100,7 +100,7 @@ public abstract class DBBase
         CreateConnection();
         string sql = CreateUpdateString();
         bool isSuccess = false;
-        
+
         using (MySqlConnection connection = new MySqlConnection())
         {
             connection.ConnectionString = _connString;
@@ -153,7 +153,7 @@ public abstract class DBBase
         CreateConnection();
         string sql = CreateDeleteString(pk, id);
         bool isSuccess = false;
-        
+
         using (MySqlConnection connection = new MySqlConnection())
         {
             connection.ConnectionString = _connString;
@@ -182,7 +182,7 @@ public abstract class DBBase
     {
         CreateConnection();
         dynamic? items = null;
-        
+
         using (MySqlConnection connection = new MySqlConnection())
         {
             connection.ConnectionString = _connString;
@@ -191,7 +191,7 @@ public abstract class DBBase
             //Console.WriteLine(items);
             connection.Close();
         }
-        
+
         return items;
     }
 }

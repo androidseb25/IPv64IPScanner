@@ -10,7 +10,7 @@ public class JobValidateIp
 
         MxToolbox mxToolbox = new MxToolbox();
         await mxToolbox.GetApiKey();
-        
+
         await Task.Run(async () =>
         {
             foreach (IPList ip in ipLists)
@@ -36,6 +36,7 @@ public class JobValidateIp
                         ip.IP_ExtendedInfos = blocklists;
                     }
                 }
+
                 ip.IP_Changed = DateTime.UtcNow;
                 ip.IP_Queue = false;
                 await ip.Update();
@@ -44,6 +45,5 @@ public class JobValidateIp
 
             await BlockListCreator.Create();
         });
-        
     }
 }

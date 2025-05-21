@@ -15,10 +15,7 @@ builder.Services.AddAuthentication();
 
 builder.Services.AddCors();
 
-builder.Services.AddControllers(opt =>
-    {
-        opt.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
-    })
+builder.Services.AddControllers(opt => { opt.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true; })
     .AddJsonOptions(opt =>
     {
         opt.JsonSerializerOptions.PropertyNamingPolicy = null;
