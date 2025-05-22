@@ -8,33 +8,44 @@ public class BlockListCreator
 
         List<IPList> ipList = await ip.LoadAll(true);
 
-        bool isCreated = await CreateFile($"{GetLocationsOf.App}/data");
+        bool isCreated = await CreateFile();
 
         if (isCreated)
-            await WriteLine($"{GetLocationsOf.App}/data", ipList);
+            await WriteLine(ipList);
     }
 
-    private static async Task<bool> CreateFile(string path)
+    private static async Task<bool> CreateFile()
     {
         //Create Database File
-        var filePath = Path.Combine(path, "IPv64Blocklist_extended.txt");
-        var isFileExists = File.Exists(filePath);
-
-        if (isFileExists) File.Delete(filePath);
-
-        Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
-        await File.WriteAllTextAsync(filePath, "");
+        if (IsExists) File.Delete(GetFilePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(GetFilePath)!);
+        await File.WriteAllTextAsync(GetFilePath, "");
 
         return true;
     }
 
-    private static async Task WriteLine(string path, List<IPList> ipList)
+    private static async Task WriteLine(List<IPList> ipList)
     {
-        var filePath = Path.Combine(path, "IPv64Blocklist_extended.txt");
-
-        using (var writer = new StreamWriter(filePath, append: true))
+        using (var writer = new StreamWriter(GetFilePath, append: true))
             foreach (var ip in ipList)
                 await writer.WriteLineAsync(ip.IP_Address);
+    }
+
+    public static string GetFilePath
+    {
+        get
+        {
+            var filePath = Path.Combine($"{GetLocationsOf.App}/data", "IPv64Blocklist_extended.txt");
+            return filePath;
+        }
+    }
+
+    public static bool IsExists
+    {
+        get
+        {
+            return File.Exists(GetFilePath);
+        }
     }
 
     public static class GetLocationsOf
