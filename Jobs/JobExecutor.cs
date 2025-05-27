@@ -14,7 +14,7 @@ public class ExecuteValidateIp : IJob
 
     public async Task Execute(IJobExecutionContext context)
     {
-        _logger.LogInformation("Starting validation Job");
+        _logger.LogInformation($"Starting validation Job at: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
         await Task.Run(() => new JobValidateIp().Execute());
     }
 }

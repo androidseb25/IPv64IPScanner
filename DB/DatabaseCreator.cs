@@ -215,7 +215,7 @@ public class DatabaseCreator
         {
             case "IPList":
                 sql =
-                    $@"CREATE TABLE IF NOT EXISTS IPList (IP_ID int NOT NULL AUTO_INCREMENT, IP_Address text NOT NULL, IP_Blocked int(1) NOT NULL, IP_Queue int(1) NOT NULL, IP_ExtendedInfos text NOT NULL, IP_Added timestamp default current_timestamp() NOT NULL, IP_Changed timestamp default current_timestamp() NOT NULL, PRIMARY KEY (IP_ID), index(IP_ID));";
+                    $@"CREATE TABLE IF NOT EXISTS IPList (IP_ID int NOT NULL AUTO_INCREMENT, IP_Address text NOT NULL, IP_Blocked int(1) NOT NULL, IP_Queue int(1) NOT NULL, IP_ExtendedInfos text NOT NULL, IP_Added timestamp default current_timestamp() NOT NULL, IP_Changed timestamp default current_timestamp() NOT NULL, IP_MethodType int(11) default 1 not null, PRIMARY KEY (IP_ID), index(IP_ID));";
                 break;
         }
 

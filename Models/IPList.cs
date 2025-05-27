@@ -11,6 +11,7 @@ public class IPList : DBBase
     public string IP_ExtendedInfos { get; set; }
     public DateTime IP_Added { get; set; }
     public DateTime IP_Changed { get; set; }
+    public int IP_MethodType { get; set; } = (int)BlockMethods.HTTP_S;
 
     public async Task<List<IPList>> LoadAll(bool onlyBlocked = false, bool onlyQueue = false)
     {

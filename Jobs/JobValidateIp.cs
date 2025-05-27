@@ -62,6 +62,14 @@ public class JobValidateIp
     
     public static List<IPAddress> GenerateIPs(string ipaddress, int count)
     {
+        if (!ipaddress.Contains('/'))
+        {
+            var addr = IPAddress.Parse(ipaddress);
+            var list = new List<IPAddress>();
+            list.Add(addr);
+            return list;
+        }
+
         var parts = ipaddress.Split('/');
         var baseIp = IPAddress.Parse(parts[0]);
         int prefix = int.Parse(parts[1]);
