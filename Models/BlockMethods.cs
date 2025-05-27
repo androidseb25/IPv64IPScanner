@@ -2,6 +2,7 @@ namespace IPv64IPScanner;
 
 public enum BlockMethods
 {
+    ALL = -1,
     SSH = 0,
     HTTP_S = 1,
     Mail = 2,

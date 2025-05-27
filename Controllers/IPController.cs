@@ -84,10 +84,10 @@ public class IPController : ControllerBase
     {
         try
         {
-            if (!BlockListCreator.IsExists)
+            if (!BlockListCreator.IsExists())
                 return BadRequest(new Response { Message = "Datei nicht gefunden!", Status = 404 });
             
-            var fileBytes = await System.IO.File.ReadAllBytesAsync(BlockListCreator.GetFilePath);
+            var fileBytes = await System.IO.File.ReadAllBytesAsync(BlockListCreator.GetFilePath());
             var memoryStream = new MemoryStream(fileBytes);
 
             // Return the file as a FileStreamResult
