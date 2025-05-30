@@ -48,6 +48,8 @@ public class JobValidateIp
                             ip.IP_ExtendedInfos = blocklists;
                             if (blocklists.ToLower().Contains("mail"))
                                 ip.IP_MethodType = (int)BlockMethods.Mail;
+                            if (blocklists.ToLower().Contains("tor"))
+                                ip.IP_MethodType = (int)BlockMethods.VPN;
                         }
                     }
                     Thread.Sleep(1000);

@@ -45,12 +45,24 @@ public class IPController : ControllerBase
         foreach (var postObject in postObjects)
         {
             IPList ipList = new IPList();
-            ipList.IP_Address = postObject.IP;
-            ipList.IP_ExtendedInfos = "";
-            ipList.IP_Added = DateTime.UtcNow;
-            ipList.IP_Changed = DateTime.UtcNow;
-            ipList.IP_Queue = true;
-            await ipList.Insert();
+            
+            IPList? ipFound = await ipList.LoadByIP(postObject.IP);
+
+            if (ipFound == null)
+            {
+                ipList.IP_Address = postObject.IP;
+                ipList.IP_ExtendedInfos = "";
+                ipList.IP_Added = DateTime.UtcNow;
+                ipList.IP_Changed = DateTime.UtcNow;
+                ipList.IP_Queue = true;
+                ipList.IP_ReportCount = 1;
+                await ipList.Insert();
+            }
+            else
+            {
+                ipFound.IP_ReportCount += 1;
+                await ipFound.Update();
+            }
         }
 
         return Ok(new Response { Message = "IP Adressen gespeichert!", Status = 200 });
